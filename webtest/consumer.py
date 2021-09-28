@@ -32,6 +32,7 @@ class TrafficLights(AsyncWebsocketConsumer):
                 json.dumps(
                     {'message': (TrafficLight.objects.get(pk=self.room_name).text, " lights left", str(second))}))
             await asyncio.sleep(1)
+        await self.text()
 
     async def exam_texting(self, event):
         await self.send(text_data=json.dumps({
