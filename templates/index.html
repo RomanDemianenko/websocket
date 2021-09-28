@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Traffic Lights</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+
+        <h1 id="app">{{ text }}</h1>
+    </div>
+</div>
+<script>
+    {#var roomName = JSON.parse(document.getElementById('room_name').innerText);#}
+    var socket = new WebSocket("ws://localhost:8000/ws/traffic/")
+    socket.onmessage = function (event) {
+        var data = JSON.parse(event.data);
+        console.log(data);
+        document.querySelector('#app').innerText = data.message
+        }
+</script>
+</body>
+</html>

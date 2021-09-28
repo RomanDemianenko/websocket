@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Room</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+
+        <h1 id="app1">{{ text1 }}</h1>
+    </div>
+    <div class="row">
+
+        <h1 id="app2">{{ text2 }}</h1>
+    </div>
+    <div class="row">
+
+        <h1 id="app3">{{ text3 }}</h1>
+    </div>
+</div>
+<script>
+    {#var room_name = JSON.parse(document.getElementById('room_name').getAttribute('pk'));#}
+
+    var socket1 = new WebSocket('ws://localhost:8000/ws/traffic/1/');
+    var socket2 = new WebSocket('ws://localhost:8000/ws/traffic/2/');
+    var socket3 = new WebSocket('ws://localhost:8000/ws/traffic/3/');
+
+    socket1.onmessage = function (event) {
+        var data = JSON.parse(event.data);
+        console.log(data);
+        document.querySelector('#app1').innerText = data.message
+    }
+
+
+    socket2.onmessage = function (event) {
+        var data = JSON.parse(event.data);
+        console.log(data);
+        document.querySelector('#app2').innerText = data.message
+    }
+
+    socket3.onmessage = function (event) {
+        var data = JSON.parse(event.data);
+        console.log(data);
+        document.querySelector('#app3').innerText = data.message
+    }
+</script>
+</body>
+</html>
