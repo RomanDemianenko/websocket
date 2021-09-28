@@ -19,7 +19,7 @@ class TrafficLights(AsyncWebsocketConsumer):
         await self.channel_layer.group_send(
             self.room_group_name,
             {
-                'type': 'exam_texting',
+                'type': 'traffic_lights',
                 'pk': self.room_name,
             }
         )
@@ -30,11 +30,11 @@ class TrafficLights(AsyncWebsocketConsumer):
         for second in range(light_time, -1, -1):
             await self.send(
                 json.dumps(
-                    {'message': (TrafficLight.objects.get(pk=self.room_name).text, " lights left", str(second))}))
+                    {'message': (TrafficLight.objects.get(pk=self.room_name).text, f" {str(second)} sec left")}))
             await asyncio.sleep(1)
         await self.text()
 
-    async def exam_texting(self, event):
+    async def traffic_lights(self, event):
         await self.send(text_data=json.dumps({
             'text': await self.text()
         }))
@@ -43,7 +43,7 @@ class TrafficLights(AsyncWebsocketConsumer):
         await self.channel_layer.group_send(
             self.room_group_name,
             {
-                'type': 'exam_texting',
+                'type': 'traffic_lights',
                 'pk': self.room_name,
             }
         )
